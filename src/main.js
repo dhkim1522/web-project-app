@@ -14,6 +14,7 @@
 
  */
 import Vue from 'vue'
+import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 
@@ -25,11 +26,13 @@ import routes from './routes/routes'
 
 import './registerServiceWorker'
 // plugin setup
+Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.use(LightBootstrap)
 
 // configure router
 const router = new VueRouter({
+  mode: 'history', // URL '#' 제거
   routes, // short for routes: routes
   linkActiveClass: 'nav-item active',
   scrollBehavior: (to) => {

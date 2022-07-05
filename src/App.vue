@@ -1,12 +1,17 @@
 <template>
   <div :class="{'nav-open': $sidebar.showSidebar}">
-    <notifications></notifications>
+    <!-- <notifications></notifications> -->
     <router-view></router-view>
+    <login-page></login-page>
   </div>
 </template>
 
 <script>
-  export default {}
+  import 'es6-promise/auto'
+import LoginPage from './pages/LoginPage.vue'
+  
+  export default {
+  components: { LoginPage },}
 </script>
 <style lang="scss">
   .vue-notifyjs.notifications{
