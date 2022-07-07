@@ -12,21 +12,20 @@
                         <div class="col-lg-10 col-xl-7 mx-auto">
                             <h3 class="display-4">Login Page</h3>
                             <p class="text-muted mb-4">Create a login split page using Bootstrap 4.</p>
-                            <form>
+                            <!-- form start -->
+                            <form @submit.prevent="submitForm">
                                 <div class="form-group mb-3">
-                                    <input id="inputEmail" type="email" placeholder="Id" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input v-model="userId" id="userId" type="text" placeholder="Id" required="" autofocus=""
+                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputPassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
-                                </div>
-                                <div class="custom-control custom-checkbox mb-3">
-                                    <input id="customCheck1" type="checkbox" checked class="custom-control-input">
-                                    <label for="customCheck1" class="custom-control-label">비밀번호 저장</label>
+                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="Password" required=""
+                                     class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">로그인</button>
-                                <!-- <div class="text-center d-flex justify-content-between mt-4"><p>Code by <a href="#" class="font-italic text-muted"> 
-                                        <u>Jassa</u></a></p></div> -->
                             </form>
+                            <!-- form end -->
+
                             <div class="text-right mt-4">
                                 <router-link to="/signup" >회원가입</router-link>
                             </div>
@@ -40,8 +39,37 @@
 </template>
 
 <script>
-export default {
+import { login } from '@/api/axios';
 
+export default {
+    data() {
+        return {
+            userId: '',
+            userPassword: ''
+        }
+    },
+    mounted() {
+        var dd = this.$store.state.counter
+    },
+    methods: {
+
+        // 로그인 폼 제출
+        async submitForm() {
+            const userData= {
+                userId: this.userId,
+                userPassword: this.userPassword
+            }
+            const res = await login(userData);
+
+            alert('로그인 완료');
+
+            // vuex store 등록
+            this.$store.commit('setUserId', res.data.userId);
+
+            // 대시보드 페이지로 이동
+            this.$router.push('/dashboard');
+        }
+    }
 }
 </script>
 

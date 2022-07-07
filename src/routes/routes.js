@@ -1,11 +1,6 @@
-import DashboardLayout from '../layout/DashboardLayout.vue'
+import DashboardLayout from '@/layout/DashboardLayout.vue'
 
 const routes = [
-  {
-    path: '/',
-    component: () => import('@/pages/LoginPage.vue'),
-    redirect: '/login'
-  },
   {
     path: '/',
     component: DashboardLayout,

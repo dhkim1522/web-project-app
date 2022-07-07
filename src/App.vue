@@ -1,18 +1,17 @@
 <template>
   <div :class="{'nav-open': $sidebar.showSidebar}">
+    <!-- 알림 토글 기능 -->
     <!-- <notifications></notifications> -->
+    <router-link to="/dashboard"></router-link>
+    <router-link to="/user"></router-link>
     <router-view></router-view>
-    <login-page></login-page>
   </div>
 </template>
 
 <script>
-  import 'es6-promise/auto'
-import LoginPage from './pages/LoginPage.vue'
-  
-  export default {
-  components: { LoginPage },}
+export default {}
 </script>
+
 <style lang="scss">
   .vue-notifyjs.notifications{
     .list-move {

@@ -16,12 +16,20 @@
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <router-link to="/login" class="nav-link">
-              Login
-            </router-link>
-            <router-link to="/signup" class="nav-link">
-              Signup
-            </router-link>
+            <!-- 1 -->
+            <template v-if="isLogin">
+              <span class="userId">{{ $store.state.userId }} 님 환영합니다. </span>
+              <a href="javascript:;" @click="logout">로그아웃</a>
+            </template>
+            <!-- 2 -->
+            <template v-else>
+              <router-link to="/login" class="nav-link">
+                로그인
+              </router-link>
+              <router-link to="/signup" class="nav-link">
+                회원가입
+              </router-link>
+            </template>
           </li>
         </ul>
       </div>
@@ -30,15 +38,18 @@
 </template>
 <script>
   export default {
+    data () {
+      return {
+        activeNotifications: false
+      }
+    },
     computed: {
       routeName () {
         const {name} = this.$route
         return this.capitalizeFirstLetter(name)
-      }
-    },
-    data () {
-      return {
-        activeNotifications: false
+      },
+      isLogin() {
+        return this.$store.getters.isLogin
       }
     },
     methods: {
@@ -56,11 +67,17 @@
       },
       hideSidebar () {
         this.$sidebar.displaySidebar(false)
+      },
+      logout() {
+        this.$store.commit('clearUserId')
+        this.$router.push('/login')
       }
     }
   }
 
 </script>
-<style>
-
+<style scoped>
+.userId {
+  color: gray
+}
 </style>

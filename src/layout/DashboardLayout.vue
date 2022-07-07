@@ -16,11 +16,13 @@
 
 
     <div class="main-panel">
+      <!-- TopNavBar.vue -->
       <top-navbar></top-navbar>
 
       <dashboard-content @click="toggleSidebar">
       </dashboard-content>
 
+      <!-- ContentFooter.vue -->
       <content-footer></content-footer>
     </div>
   </div>
