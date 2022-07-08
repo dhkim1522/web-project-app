@@ -22,7 +22,9 @@
                                     <input v-model="userPassword" id="userPassword" type="password" placeholder="Password" required=""
                                      class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">로그인</button>
+                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">
+                                    로그인
+                                </button>
                             </form>
                             <!-- form end -->
 
@@ -39,7 +41,8 @@
 </template>
 
 <script>
-import { login } from '@/api/axios';
+import { login } from '../api/axios'
+import { saveAuthToCookie, saveUserNicknameToCookie } from '../utils/cookie';
 
 export default {
     data() {
@@ -48,26 +51,42 @@ export default {
             userPassword: ''
         }
     },
-    mounted() {
-        var dd = this.$store.state.counter
-    },
     methods: {
-
         // 로그인 폼 제출
         async submitForm() {
-            const userData= {
-                userId: this.userId,
-                userPassword: this.userPassword
+            try {
+                // 비즈니스 로직
+                const userData = {
+                    userId: this.userId,
+                    userPassword: this.userPassword
+                };
+
+                const res = await login(userData);
+
+                // vuex store 등록
+                this.$store.commit('setUserId', res.data.userId);
+                this.$store.commit('setUserNickname', res.data.userNickname);
+                this.$store.commit('setUserEmail', res.data.userEmail);
+                this.$store.commit('setToken', res.data.token);
+
+                // cookie에 user 정보와 jwt 인증 키를 저장
+                saveAuthToCookie(res.data.token);
+                saveUserNicknameToCookie(res.data.userNickname); 
+
+                alert('로그인 완료');
+
+                // 대시보드 페이지로 이동
+                this.$router.push('/dashboard');
+
+            } catch (error) {
+                console.log(error.response.data);
+            } finally {
+                this.initForm();
             }
-            const res = await login(userData);
-
-            alert('로그인 완료');
-
-            // vuex store 등록
-            this.$store.commit('setUserId', res.data.userId);
-
-            // 대시보드 페이지로 이동
-            this.$router.push('/dashboard');
+        },
+        initForm() {
+            this.userId = '';
+            this.password = '';
         }
     }
 }

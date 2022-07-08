@@ -18,7 +18,7 @@
           <li class="nav-item">
             <!-- 1 -->
             <template v-if="isLogin">
-              <span class="userId">{{ $store.state.userId }} 님 환영합니다. </span>
+              <span class="userId">{{ $store.state.userNickname }} 님 환영합니다. </span>
               <a href="javascript:;" @click="logout">로그아웃</a>
             </template>
             <!-- 2 -->
@@ -37,6 +37,8 @@
   </nav>
 </template>
 <script>
+import { deleteCookie } from '../utils/cookie';
+
   export default {
     data () {
       return {
@@ -70,6 +72,13 @@
       },
       logout() {
         this.$store.commit('clearUserId')
+        this.$store.commit('clearUserNickname')
+        this.$store.commit('clearUserEmail')
+        this.$store.commit('cleanToken')
+
+        deleteCookie('auth_key');
+        deleteCookie('user_nickname');
+
         this.$router.push('/login')
       }
     }

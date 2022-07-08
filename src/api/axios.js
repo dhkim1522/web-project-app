@@ -1,19 +1,25 @@
-import axios from "axios";
+import axios from 'axios';
+import store from '../store/store';
+import { setInterceptors } from './common/interceptors';
 
-const apiURL = axios.create({
-    baseURL: process.env.VUE_APP_API_URL
-});
+function initInstance() {
+    const instance = axios.create({
+        baseURL: process.env.VUE_APP_API_URL,
+        headers: {
+            Authorization: store.state.token
+        },
+    });
+    return setInterceptors(instance);
+}
+
+const instance = initInstance();
 
 function signup(userData) {
-    // const url = 'http://localhost:3000/api/user';
-    // axios.post(url, userData);
-    return apiURL.post('/user', userData);
+    return instance.post('/user', userData);
 }
  
 function login(userData) {
-    // const url = 'http://localhost:3000/api/user';
-    // axios.post(url, userData);
-    return apiURL.post('/login', userData);
+    return instance.post('/login', userData);
 }
 
 export { signup, login };

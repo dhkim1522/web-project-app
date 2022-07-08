@@ -17,17 +17,17 @@
                             <form @submit.prevent="submitForm">
                                 <div class="form-group mb-3">
                                     <label for="userId">아이디</label>
-                                    <input v-model="userId" id="userId" type="text" placeholder="Id" required="" autofocus="" 
+                                    <input v-model="userId" id="userId" type="text" placeholder="아이디" required="" autofocus="" 
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="userPassword">비밀번호</label>
-                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="Password" required="" 
+                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="********" required="" 
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="userName">이름</label>
-                                    <input v-model="userName" id="userName" type="text" required="" placeholder="홍길동" 
+                                    <label for="userNickname">닉네임</label>
+                                    <input v-model="userNickname" id="userNickname" type="text" required="" placeholder="닉네임" 
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
@@ -56,7 +56,7 @@ export default {
         return {
             userId: '',
             userPassword: '',
-            userName: '',
+            userNickname: '',
             userEmail: ''
         }
     },
@@ -67,14 +67,13 @@ export default {
             const userData= {
                 userId: this.userId,
                 userPassword: this.userPassword,
-                userName: this.userName,
+                userNickname: this.userNickname,
                 userEmail: this.userEmail
             }
             const res = await signup(userData);
 
             alert('회원가입 완료');
 
-            // location.replace(this.$url + '/login');
             this.initForm();
         },
 
@@ -82,7 +81,7 @@ export default {
         initForm() {
             this.userId = '';
             this.userPassword = '';
-            this.userName = '';
+            this.userNickname = '';
             this.userEmail = '';
         }
     }
