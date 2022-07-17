@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { getAuthFromCookie, getUserNicknameFromCookie } from '../utils/cookie';
+import { getAuthFromCookie,
+         getUserNicknameFromCookie,
+         saveAuthToCookie,
+         saveUserNicknameToCookie } from '../utils/cookie';
+import { login } from '@/api/axios';
 
 Vue.use(Vuex);
 
@@ -9,7 +13,7 @@ export default new Vuex.Store({
         userId: '',
         userNickname: getUserNicknameFromCookie() || '',
         userEmail: '',
-        token: getAuthFromCookie() || ''
+        token: getAuthFromCookie() || '',
     },
 
     getters: {
@@ -46,6 +50,22 @@ export default new Vuex.Store({
     },
 
     actions: {
-        
+        async LOGIN({ commit }, userData) {
+            const res = await login(userData);
+
+                // vuex store 등록
+                commit('setUserId', res.data.userId);
+                commit('setUserNickname', res.data.userNickname);
+                commit('setUserEmail', res.data.userEmail);
+                commit('setToken', res.data.token);
+
+                // cookie에 user 정보와 jwt 인증 키를 저장
+                saveAuthToCookie(res.data.token);
+                saveUserNicknameToCookie(res.data.userNickname); 
+
+                alert('로그인 완료');
+
+                return res.data;
+        }
     }
 });

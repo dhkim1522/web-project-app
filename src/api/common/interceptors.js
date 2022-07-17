@@ -1,7 +1,6 @@
-import store from "../../store/store";
+import store from "@/store/store";
 
 export function setInterceptors(instance) {
-
     // Add a request interceptor
     instance.interceptors.request.use(
         function (config) {
@@ -9,7 +8,7 @@ export function setInterceptors(instance) {
             // console.log(config);
             config.headers.Authorization = store.state.token;
 
-            console.log('interceptor >> ' + store.state.token);
+            //console.log('interceptor request token : ' + store.state.token);
             
             return config;
         },

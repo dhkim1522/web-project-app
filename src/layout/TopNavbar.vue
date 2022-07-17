@@ -71,15 +71,20 @@ import { deleteCookie } from '../utils/cookie';
         this.$sidebar.displaySidebar(false)
       },
       logout() {
+        // Vuex Store 상태 값 지우기
         this.$store.commit('clearUserId')
         this.$store.commit('clearUserNickname')
         this.$store.commit('clearUserEmail')
         this.$store.commit('cleanToken')
 
+        // Browser Cookie에 저장된 값 지우기
         deleteCookie('auth_key');
         deleteCookie('user_nickname');
 
-        this.$router.push('/login')
+        alert('로그아웃 되었습니다.');
+
+        // 로그인 페이지로 이동
+        this.$router.push('/login');
       }
     }
   }

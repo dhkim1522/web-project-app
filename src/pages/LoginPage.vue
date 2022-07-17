@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import { login } from '../api/axios'
-import { saveAuthToCookie, saveUserNicknameToCookie } from '../utils/cookie';
+// import { login } from '../api/axios'
+// import { saveAuthToCookie, saveUserNicknameToCookie } from '../utils/cookie';
 
 export default {
     data() {
@@ -61,19 +61,7 @@ export default {
                     userPassword: this.userPassword
                 };
 
-                const res = await login(userData);
-
-                // vuex store 등록
-                this.$store.commit('setUserId', res.data.userId);
-                this.$store.commit('setUserNickname', res.data.userNickname);
-                this.$store.commit('setUserEmail', res.data.userEmail);
-                this.$store.commit('setToken', res.data.token);
-
-                // cookie에 user 정보와 jwt 인증 키를 저장
-                saveAuthToCookie(res.data.token);
-                saveUserNicknameToCookie(res.data.userNickname); 
-
-                alert('로그인 완료');
+                await this.$store.dispatch('LOGIN', userData);
 
                 // 대시보드 페이지로 이동
                 this.$router.push('/dashboard');

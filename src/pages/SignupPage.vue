@@ -17,22 +17,22 @@
                             <form @submit.prevent="submitForm">
                                 <div class="form-group mb-3">
                                     <label for="userId">아이디</label>
-                                    <input v-model="userId" id="userId" type="text" placeholder="아이디" required="" autofocus="" 
+                                    <input v-model="userId" id="userId" type="text" placeholder="ID" required
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="userPassword">비밀번호</label>
-                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="********" required="" 
+                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="********" required
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="userNickname">닉네임</label>
-                                    <input v-model="userNickname" id="userNickname" type="text" required="" placeholder="닉네임" 
+                                    <input v-model="userNickname" id="userNickname" type="text" placeholder="닉네임" required 
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="userEmail">이메일</label>
-                                    <input v-model="userEmail" id="userEmail" type="text" required="" placeholder="example@naver.com" 
+                                    <input v-model="userEmail" id="userEmail" type="text" placeholder="example@naver.com" required
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">회원가입</button>
@@ -75,6 +75,9 @@ export default {
             alert('회원가입 완료');
 
             this.initForm();
+
+            // 로그인 페이지로 이동
+            this.$router.push('/login');
         },
 
         // 폼 초기화
