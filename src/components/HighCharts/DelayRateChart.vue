@@ -45,6 +45,9 @@ export default {
                     name: '지연율',
                     data: [],
                 }],
+                credits: {
+                    enabled: false,
+                },
             }
         }
     },
@@ -52,12 +55,6 @@ export default {
     methods: {
         async loadDelayRate() {
             const { data } = await getDelayRate();
-
-            console.log('data1 : {}', data);
-
-            console.log('PieChart example Arr {}', this.chartOptions.series[0].data)
-
-            //data.map(obj => obj.month + '월')
 
             const dataArr = new Array;
             let i = 0;
@@ -67,19 +64,19 @@ export default {
                 let newName;
                 
                 if(key == 'carrierDelayRate') {
-                    newName = '수하물'
+                    newName = '수하물 지연율'
                 }
                 if(key == 'weatherDelayRate') {
-                    newName = '날씨'
+                    newName = '날씨 지연율'
                 }
                 if(key == 'nasDelayRate') {
-                    newName = '관제'
+                    newName = '관제 지연율'
                 }
                 if(key == 'securityDelayRate') {
-                    newName = '보안'
+                    newName = '보안 지연율'
                 }
                 if(key == 'lateAircraftDelayRate') {
-                    newName = '항공기'
+                    newName = '항공기 지연율'
                 }
 
                 dataArr[i] = {
@@ -89,11 +86,7 @@ export default {
                 i++;
             }
 
-            console.log('data map > ' + dataArr.map(obj => obj.name));
-
             this.chartOptions.series[0].data = dataArr;
-
-            console.log('dataArr {}', dataArr);
         },
     },
 

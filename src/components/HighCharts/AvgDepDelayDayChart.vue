@@ -1,20 +1,19 @@
 <template lang="">
     <div>
         <div>
-            <b-form-select @change="loadAvgAetMonth(selectedMonth)" v-model="selectedMonth" :options="this.selectMonthArr"
+            <b-form-select @change="loadAvgDepDelayDay(selectedMonth)" v-model="selectedMonth" :options="this.selectMonthArr"
              size="sm" style="width: 20%" class="m-1"></b-form-select>
         </div>
         <highcharts :options="chartOptions"></highcharts>
     </div>
 </template>
 <script>
-import { getAvgAetDay } from '@/api/axios'
+import { getAvgDepDelayDay } from '@/api/axios'
 
 export default {
 
     data() {
         return {
-
             // Select Box
             selectedMonth: 1,
 
@@ -24,14 +23,14 @@ export default {
                     type: 'area'
                 },
                 title: {
-                    text: '일별 평균 운항 시간',
+                    text: '일별 평균 출발 지연 시간',
                     style: {
                         fontWeight: 'bold'
                     }
                 },
                 series: [{
-                    name: '평균 운항 시간',
-                    color: '#64AAFF',
+                    name: '평균 평균 항공 출발 지연 시간',
+                    color: '#FFC5D0',
                     data: [],
                 }],
                 xAxis: {
@@ -66,12 +65,12 @@ export default {
         }
     },
 
-    methods: {
-        async loadAvgAetMonth(selectedMonth) {
+     methods: {
+        async loadAvgDepDelayDay(selectedMonth) {
 
             console.log('selected !! ' + selectedMonth)
 
-            const { data } = await getAvgAetDay(selectedMonth);
+            const { data } = await getAvgDepDelayDay(selectedMonth);
 
             // console.log('data : {}', data);
 
@@ -80,7 +79,7 @@ export default {
                         = data.map(obj => obj.day + '일');
 
             // Y축 데이터 바인딩
-            this.chartOptions.series = {'data': data.map(obj => obj.avgAet)};
+            this.chartOptions.series = {'data': data.map(obj => obj.avgDepDelay)};
         },
     },
 
@@ -103,7 +102,7 @@ export default {
     },
 
     created() {
-        this.loadAvgAetMonth(this.selectedMonth);
+        this.loadAvgDepDelayDay(this.selectedMonth);
     },
 }
 </script>

@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import { getAvgAetMonth } from '@/api/axios'
+import { getDelayCount } from '@/api/axios'
 
 export default {
 
@@ -12,40 +12,87 @@ export default {
         return {
             chartOptions: {
                 chart: {
-                    type: 'spline'
+                    type: 'column'
                 },
                 title: {
-                    text: '월별 평균 운항 시간'
+                    text: '전체 지연 사유 별 건 수',
+                    style: {
+                        fontWeight: 'bold'
+                    }
                 },
-                series: [{
-                    data: [],
-                    color: '#6fcd98'
-                }],
                 xAxis: {
-                    categories: [],
-                    // categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-                }
+                    categories: [' '],
+                    crosshair: false
+                },
+                yAxis: {
+                    // min: 0,
+                    // max: 500,
+                    title: {
+                    text: ''
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: []
             }
         }
     },
-
     methods: {
-        async loadAvgAetMonth() {
-            const { data } = await getAvgAetMonth();
+        async loadDelayCount() {
+            const { data } = await getDelayCount();
 
-            console.log('data : {}', data);
+            const dataArr = new Array;
+            let i = 0;
 
-            // X축 데이터 바인딩
-            this.chartOptions.xAxis.categories 
-                        = data.map(obj => obj.month + '월');
+            for(let key in data[0]) {
 
-            // Y축 데이터 바인딩
-            this.chartOptions.series = {'data': data.map(obj => obj.avgAet)};
+                let newName;
+                
+                if(key == 'carrierDelayCount') {
+                    newName = '수하물 지연'
+                }
+                if(key == 'weatherDelayCount') {
+                    newName = '날씨 지연'
+                }
+                if(key == 'nasDelayCount') {
+                    newName = '관제 지연'
+                }
+                if(key == 'securityDelayCount') {
+                    newName = '보안 지연'
+                }
+                if(key == 'lateAircraftDelayCount') {
+                    newName = '항공기 지연'
+                }
+
+                dataArr[i] = {  name: newName,
+                                    data: []  };
+
+                dataArr[i].data[0] = data[0][key];
+
+                i++;
+            }
+
+            console.log('dataArr {}', dataArr);
+
+            this.chartOptions.series = dataArr
+
         },
     },
 
     created() {
-        this.loadAvgAetMonth();
+        this.loadDelayCount();
     },
 }
 </script>
