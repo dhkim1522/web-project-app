@@ -15,16 +15,30 @@ export default {
                     type: 'spline'
                 },
                 title: {
-                    text: '월별 평균 운항 시간'
+                    text: '월별 평균 운항 시간',
+                    style: {
+                        fontWeight: 'bold'
+                    }
                 },
                 series: [{
+                    name: '평균 운항 시간',
+                    color: '#6fcd98',
                     data: [],
-                    color: '#6fcd98'
                 }],
                 xAxis: {
                     categories: [],
-                    // categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-                }
+                    labels: {
+                        format: '{value}월'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    },
+                    labels: {
+                        format: '{value}(h)'
+                    }
+                },
             }
         }
     },
@@ -33,14 +47,14 @@ export default {
         async loadAvgAetMonth() {
             const { data } = await getAvgAetMonth();
 
-            console.log('data : {}', data);
+            console.log('data2 : {}', data);
 
             // X축 데이터 바인딩
             this.chartOptions.xAxis.categories 
-                        = data.map(obj => obj.month + '월');
+                        = data.map(obj => obj.month);
 
             // Y축 데이터 바인딩
-            this.chartOptions.series = {'data': data.map(obj => obj.actualElapsedTime)};
+            this.chartOptions.series = {'data': data.map(obj => obj.avgAet)};
         },
     },
 
