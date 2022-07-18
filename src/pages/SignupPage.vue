@@ -69,7 +69,8 @@ export default {
                 userPassword: this.userPassword,
                 userNickname: this.userNickname,
                 userEmail: this.userEmail
-            }
+            };
+
             const res = await signup(userData);
 
             alert('회원가입 완료');

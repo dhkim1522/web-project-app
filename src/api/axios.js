@@ -26,18 +26,18 @@ function getAvgAetMonth() {
 }
 
 // 일별 평균 항공 운항 시간 조회 API
-function getAvgAetDay() {
-    return instance.get('/data/day/avgaet');
+function getAvgAetDay(month) {
+    return instance.get('/data/day/avgaet/' + month);
 }
 
 // 월별 평균 항공 지연 시간 조회 API
-function getAvgArrDelayMonth() {
-    return instance.get('/data/month/avg-arr-delay');
+function getAvgDepDelayMonth() {
+    return instance.get('/data/month/avg-dep-delay');
 }
 
 // 일별 평균 항공 지연 시간 조회 API
-function getAvgArrDelayDay() {
-    return instance.get('/data/day/avg-arr-delay');
+function getAvgDepDelayDay(month) {
+    return instance.get('/data/day/avg-dep-delay/' + month);
 }
 
 // 전체 지연 사유 별 개수 조회 API
@@ -56,8 +56,8 @@ export {
      login,
      getAvgAetMonth,
      getAvgAetDay,
-     getAvgArrDelayMonth,
-     getAvgArrDelayDay,
+     getAvgDepDelayMonth,
+     getAvgDepDelayDay,
      getDelayCount,
      getDelayRate
      };
