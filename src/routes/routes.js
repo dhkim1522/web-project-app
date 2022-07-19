@@ -16,7 +16,7 @@ const routes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        component: () => import('@/pages/Dashboard_back.vue'),
+        component: () => import('@/pages/AvgaetDashboard.vue'),
         meta: { auth: true }
       },
       {

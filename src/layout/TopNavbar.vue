@@ -18,7 +18,7 @@
           <li class="nav-item">
             <!-- 1 -->
             <template v-if="isLogin">
-              <span class="userId">{{ $store.state.userNickname }} 님 환영합니다. </span>
+              <span class="userNickname">{{ this.$store.state.userNickname }} 님 환영합니다. </span>
               <a href="javascript:;" @click="logout">로그아웃</a>
             </template>
             <!-- 2 -->
@@ -37,12 +37,16 @@
   </nav>
 </template>
 <script>
+import { getUser } from '@/api/axios'
 import { deleteCookie } from '../utils/cookie';
 
   export default {
     data () {
       return {
-        activeNotifications: false
+        activeNotifications: false,
+
+        userSeqId: this.$store.state.userSeqId,
+        userNickname: '',
       }
     },
     computed: {
@@ -70,8 +74,21 @@ import { deleteCookie } from '../utils/cookie';
       hideSidebar () {
         this.$sidebar.displaySidebar(false)
       },
+
+      // 회원 조회
+      async loadUser() {
+
+        const userSeqId = this.userSeqId;
+
+        const res = await getUser(userSeqId);
+
+        this.userNickname = res.data.userNickname;
+      },
+
+      // 로그아웃
       logout() {
         // Vuex Store 상태 값 지우기
+        this.$store.commit('clearUserSeqId')
         this.$store.commit('clearUserId')
         this.$store.commit('clearUserNickname')
         this.$store.commit('clearUserEmail')
@@ -79,6 +96,8 @@ import { deleteCookie } from '../utils/cookie';
 
         // Browser Cookie에 저장된 값 지우기
         deleteCookie('auth_key');
+        deleteCookie('user_seq_id');
+        deleteCookie('user_id');
         deleteCookie('user_nickname');
 
         alert('로그아웃 되었습니다.');
@@ -86,12 +105,16 @@ import { deleteCookie } from '../utils/cookie';
         // 로그인 페이지로 이동
         this.$router.push('/login');
       }
+    },
+
+    created() {
+      this.loadUser();
     }
   }
 
 </script>
 <style scoped>
-.userId {
+.userNickname {
   color: gray
 }
 </style>

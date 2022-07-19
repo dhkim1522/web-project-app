@@ -10,6 +10,9 @@ function initInstance() {
 }
 const instance = initInstance();
 
+
+///////// USER ///////////
+
 // 회원가입 API
 function signup(userData) {
     return instance.post('/user', userData);
@@ -19,6 +22,24 @@ function signup(userData) {
 function login(userData) {
     return instance.post('/login', userData);
 }
+
+// 회원 조회 API
+function getUser(userSeqId) {
+    return instance.get('/user/' + userSeqId);
+}
+
+// 회원 수정 API
+function updateUser(userSeqId, userData) {
+    return instance.patch('/user', userSeqId, userData);
+}
+
+// 전체 데이터 개수 조회 API
+function getUserCountAll() {
+    return instance.get('/user/count');
+}
+
+
+///////// DATA ///////////
 
 // 월별 평균 항공 운항 시간 조회 API
 function getAvgAetMonth() {
@@ -60,9 +81,17 @@ function getCancelCode() {
     return instance.get('/data/cancel-code');
 }
 
+// 전체 데이터 개수 조회 API
+function getDataCountAll() {
+    return instance.get('/data/count');
+}
+
 export {
      signup,
      login,
+     getUser,
+     updateUser,
+     getUserCountAll,
      getAvgAetMonth,
      getAvgAetDay,
      getAvgDepDelayMonth,
@@ -71,4 +100,5 @@ export {
      getDelayRate,
      getCancelDivert,
      getCancelCode,
+     getDataCountAll,
      };

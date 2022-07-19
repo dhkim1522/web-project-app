@@ -58,8 +58,6 @@ export default {
                     userPassword: this.userPassword
                 };
 
-                console.log('userData !! {}', userData)
-
                 await this.$store.dispatch('LOGIN', userData);
 
                 // 대시보드 페이지로 이동

@@ -61,7 +61,6 @@
             </div>
           </stats-card>
         </div>
-
       </div>
       <div class="row">
         <div class="col-md-8">

@@ -1,97 +1,41 @@
 <template>
   <card>
-    <h4 slot="header" class="card-title">Edit Profile</h4>
+    <h4 slot="header" class="card-title mt-2 ml-2">회원 수정</h4>
     <form>
       <div class="row">
-        <div class="col-md-5">
+      <div class="col-md-6">
           <base-input type="text"
-                    label="Company"
+                    label="아이디"
                     :disabled="true"
-                    placeholder="Light dashboard"
-                    v-model="user.company">
+                    :placeholder="[[ userId ]]"
+                    v-model="userId">
           </base-input>
         </div>
-        <div class="col-md-3">
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
           <base-input type="text"
-                    label="Username"
-                    placeholder="Username"
-                    v-model="user.username">
+                    label="닉네임"
+                    :placeholder="[[ userNickname ]]"
+                    v-model="userNickname">
           </base-input>
         </div>
-        <div class="col-md-4">
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
           <base-input type="email"
-                    label="Email"
-                    placeholder="Email"
-                    v-model="user.email">
+                    label="이메일"
+                    :placeholder="[[ userEmail ]]"
+                    v-model="userEmail">
           </base-input>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-6">
-          <base-input type="text"
-                    label="First Name"
-                    placeholder="First Name"
-                    v-model="user.firstName">
-          </base-input>
-        </div>
-        <div class="col-md-6">
-          <base-input type="text"
-                    label="Last Name"
-                    placeholder="Last Name"
-                    v-model="user.lastName">
-          </base-input>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <base-input type="text"
-                    label="Address"
-                    placeholder="Home Address"
-                    v-model="user.address">
-          </base-input>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          <base-input type="text"
-                    label="City"
-                    placeholder="City"
-                    v-model="user.city">
-          </base-input>
-        </div>
-        <div class="col-md-4">
-          <base-input type="text"
-                    label="Country"
-                    placeholder="Country"
-                    v-model="user.country">
-          </base-input>
-        </div>
-        <div class="col-md-4">
-          <base-input type="number"
-                    label="Postal Code"
-                    placeholder="ZIP Code"
-                    v-model="user.postalCode">
-          </base-input>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label>About Me</label>
-            <textarea rows="5" class="form-control border-input"
-                      placeholder="Here can be your description"
-                      v-model="user.aboutMe">
-              </textarea>
-          </div>
-        </div>
-      </div>
       <div class="text-center">
-        <button type="submit" class="btn btn-info btn-fill float-right" @click.prevent="updateProfile">
-          Update Profile
+        <button type="submit" class="btn btn-info btn-fill float-right" @click.prevent="updateProfileForm">
+          프로필 수정
         </button>
       </div>
       <div class="clearfix"></div>
@@ -100,6 +44,7 @@
 </template>
 <script>
   import Card from 'src/components/Cards/Card.vue'
+  import { getUser, updateUser } from '@/api/axios'
 
   export default {
     components: {
@@ -107,24 +52,52 @@
     },
     data () {
       return {
-        user: {
-          company: 'Light dashboard',
-          username: 'michael23',
-          email: '',
-          firstName: 'Mike',
-          lastName: 'Andrew',
-          address: 'Melbourne, Australia',
-          city: 'melbourne',
-          country: 'Australia',
-          postalCode: '',
-          aboutMe: `Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.`
-        }
+          userSeqId: this.$store.state.userSeqId,
+          userId: '',
+          userNickname: '',
+          userEmail: '',
       }
     },
     methods: {
-      updateProfile () {
-        alert('Your data: ' + JSON.stringify(this.user))
-      }
+      // updateProfile () {
+      //   alert('Your data: ' + JSON.stringify(this.user))
+      // }
+
+      // 회원 조회
+      async loadUser() {
+
+        let userSeqId = this.userSeqId;
+
+        const res = await getUser(userSeqId);
+
+        this.userId = res.data.userId;
+        this.userNickname = res.data.userNickname;
+        this.userEmail = res.data.userEmail;
+      },
+
+      // 회원수정 폼 제출
+      async updateProfileForm() {
+
+          let userseqId = this.userSeqId;
+          
+          const userData = {
+              userId: this.userId,
+              userNickname: this.userNickname,
+              userEmail: this.userEmail
+          };
+
+          console.log('수정 userData {}', userData);
+
+          const res = await updateUser(userseqId, userData);
+
+          alert('회원수정 완료');
+
+          // 메인 대시보드 페이지로 이동
+          // this.$router.push('/dashboard');
+      },
+    },
+    created() {
+      this.loadUser();
     }
   }
 

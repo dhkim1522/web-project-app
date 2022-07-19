@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { signup } from '@/api/axios';
+import { signup } from '@/api/axios'
 
 export default {
     data() {
@@ -64,7 +64,7 @@ export default {
 
         // 회원가입 폼 제출
         async submitForm() {
-            const userData= {
+            const userData = {
                 userId: this.userId,
                 userPassword: this.userPassword,
                 userNickname: this.userNickname,

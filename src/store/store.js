@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { getAuthFromCookie,
+         getUserSeqIdFromCookie,
+        //  getUserIdFromCookie,
          getUserNicknameFromCookie,
+         saveUserSeqIdToCookie,
+         saveUserIdToCookie,
          saveAuthToCookie,
          saveUserNicknameToCookie } from '../utils/cookie';
 import { login } from '@/api/axios';
@@ -10,6 +14,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        userSeqId: getUserSeqIdFromCookie() || '',
         userId: '',
         userNickname: getUserNicknameFromCookie() || '',
         userEmail: '',
@@ -25,6 +30,12 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        setUserSeqId(state, userSeqId) {
+            state.userSeqId = userSeqId;
+        },
+        clearUserSeqId(state) {
+            state.userSeqId = '';
+        },
         setUserId(state, userId) {
             state.userId = userId;
         },
@@ -56,6 +67,7 @@ export default new Vuex.Store({
             const res = await login(userData);
 
                 // vuex store 등록
+                commit('setUserSeqId', res.data.userSeqId);
                 commit('setUserId', res.data.userId);
                 commit('setUserNickname', res.data.userNickname);
                 commit('setUserEmail', res.data.userEmail);
@@ -63,7 +75,9 @@ export default new Vuex.Store({
 
                 // cookie에 user 정보와 jwt 인증 키를 저장
                 saveAuthToCookie(res.data.token);
-                saveUserNicknameToCookie(res.data.userNickname); 
+                saveUserSeqIdToCookie(res.data.userSeqId);
+                saveUserIdToCookie(res.data.userId);
+                saveUserNicknameToCookie(res.data.userNickname);
 
                 alert('로그인 완료');
 
