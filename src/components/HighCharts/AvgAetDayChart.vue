@@ -71,6 +71,7 @@ export default {
 
             const { data } = await getAvgAetDay(selectedMonth);
 
+
             // X축 데이터 바인딩
             this.chartOptions.xAxis.categories 
                         = data.map(obj => obj.day + '일');
