@@ -14,6 +14,8 @@ export default new Vuex.Store({
         userNickname: getUserNicknameFromCookie() || '',
         userEmail: '',
         token: getAuthFromCookie() || '',
+
+        currentPage: 1,
     },
 
     getters: {

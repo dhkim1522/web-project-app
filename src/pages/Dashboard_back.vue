@@ -2,7 +2,7 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <!-- <div class="col-xl-3 col-md-6">
+        <div class="col-xl-3 col-md-6">
           <stats-card>
             <div slot="header" class="icon-warning">
               <i class="nc-icon nc-chart text-warning"></i>
@@ -60,7 +60,7 @@
               <i class="fa fa-refresh"></i>Updated now
             </div>
           </stats-card>
-        </div> -->
+        </div>
 
       </div>
       <div class="row">
@@ -173,7 +173,6 @@
   import StatsCard from 'src/components/Cards/StatsCard.vue'
   import LTable from 'src/components/Table.vue'
 
-  import { getAvgAet } from '@/api/axios'
 
   export default {
     components: {
@@ -182,37 +181,8 @@
       StatsCard
     },
 
-    created() {
-      this.loadAvgAet();
-    },
-
-    methods: {
-      async loadAvgAet() {
-        const res = await getAvgAet();
-
-        console.log('data : {}', res.data);
-
-        this.month = res.data.map(obj => obj.month);
-
-
-        console.log(this.month);
-
-
-        // this.chartData.loadAvgAet.actualElapsedTime = res.data.map(obj => obj.actualElapsedTime);
-        
-
-      },
-    },
-
     data () {
       return {
-        chartData: {
-          loadAvgAet: {
-            month: '',
-            actualElapsedTime: '',
-          }
-        },
-
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
         pieChart: {

@@ -50,6 +50,15 @@ function getDelayRate() {
     return instance.get('/data/delay-rate');
 }
 
+// 전체 운항 취소 및 우회 건 수 조회 API
+function getCancelDivert() {
+    return instance.get('/data/cancel-divert');
+}
+
+// 전체 운항 취소 사유 조회 API
+function getCancelCode() {
+    return instance.get('/data/cancel-code');
+}
 
 export {
      signup,
@@ -59,5 +68,7 @@ export {
      getAvgDepDelayMonth,
      getAvgDepDelayDay,
      getDelayCount,
-     getDelayRate
+     getDelayRate,
+     getCancelDivert,
+     getCancelCode,
      };

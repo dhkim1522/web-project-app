@@ -16,7 +16,25 @@ const routes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        component: () => import('@/pages/Dashboard.vue'),
+        component: () => import('@/pages/Dashboard_back.vue'),
+        meta: { auth: true }
+      },
+      {
+        path: 'dep-delay-dashboard',
+        name: 'DepDelayDashboard',
+        component: () => import('@/pages/DepDelayDashboard.vue'),
+        meta: { auth: true }
+      },
+      {
+        path: 'delay-rate-dashboard',
+        name: 'DelayRateDashboard',
+        component: () => import('@/pages/DelayRateDashboard.vue'),
+        meta: { auth: true }
+      },
+      {
+        path: 'cancel-countdashboard',
+        name: 'CancelCountDashboard',
+        component: () => import('@/pages/CancelCountDashboard.vue'),
         meta: { auth: true }
       },
       {

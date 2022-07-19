@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import { getDelayCount } from '@/api/axios'
+import { getCancelDivert } from '@/api/axios'
 
 export default {
 
@@ -12,17 +12,16 @@ export default {
         return {
             chartOptions: {
                 chart: {
-                    type: 'column'
+                    type: 'bar'
                 },
                 title: {
-                    text: '운항 지연 사유 별 건 수',
+                    text: '운항 취소 및 우회 운항 건 수',
                     style: {
                         fontWeight: 'bold'
                     }
                 },
                 xAxis: {
                     categories: [' '],
-                    // crosshair: false
                 },
                 yAxis: {
                     // min: 0,
@@ -46,7 +45,7 @@ export default {
                     column: {
                         pointPadding: 0.2,
                         borderWidth: 0
-                    }
+                    },
                 },
                 series: [],
                 credits: {
@@ -56,8 +55,8 @@ export default {
         }
     },
     methods: {
-        async loadDelayCount() {
-            const { data } = await getDelayCount();
+        async loadCancelDivert() {
+            const { data } = await getCancelDivert();
 
             const dataArr = new Array;
             let i = 0;
@@ -66,37 +65,34 @@ export default {
 
                 let newName;
                 
-                if(key == 'carrierDelayCount') {
-                    newName = '수하물 지연'
+                if(key == 'cancelCount') {
+                    newName = '운항 취소'
                 }
-                if(key == 'weatherDelayCount') {
-                    newName = '날씨 지연'
-                }
-                if(key == 'nasDelayCount') {
-                    newName = '관제 지연'
-                }
-                if(key == 'securityDelayCount') {
-                    newName = '보안 지연'
-                }
-                if(key == 'lateAircraftDelayCount') {
-                    newName = '항공기 지연'
+                if(key == 'divertCount') {
+                    newName = '우회 운항'
                 }
 
                 dataArr[i] = {  name: newName,
-                                    data: []  };
+                                data: [],      };
 
                 dataArr[i].data[0] = data[0][key];
 
                 i++;
             }
 
-            this.chartOptions.series = dataArr
+            // 각 bar 색상 지정
+            const barColor1 = {color: "#FF848F"};
+            const barColor2 = {color: "#5F9EA0"};
 
+            Object.assign(dataArr[0], barColor1);
+            Object.assign(dataArr[1], barColor2);
+
+            this.chartOptions.series = dataArr
         },
     },
 
     created() {
-        this.loadDelayCount();
+        this.loadCancelDivert();
     },
 }
 </script>

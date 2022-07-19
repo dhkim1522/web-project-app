@@ -4,7 +4,7 @@
     <!-- 사이드 바 메뉴 탭 -->
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/dashboard">
+      <sidebar-link to="/dashboard" isSubMenu>
         <i class="nc-icon nc-chart-pie-35"></i>
         <p>Dashboard</p>
       </sidebar-link>

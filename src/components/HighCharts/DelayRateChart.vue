@@ -42,7 +42,8 @@ export default {
                     }
                 },
                 series: [{
-                    name: '지연율',
+                    name: '분포율',
+                    colorByPoint: true,
                     data: [],
                 }],
                 credits: {
@@ -59,6 +60,7 @@ export default {
             const dataArr = new Array;
             let i = 0;
 
+            // 차트에 표시될 명칭으로 새로운 배열 생성
             for(let key in data[0]) {
 
                 let newName;
@@ -85,6 +87,28 @@ export default {
                               };
                 i++;
             }
+
+            // y축 수치값만 따로 모을 배열 생성
+            const yArr = [];
+
+            for(let i=0; i<dataArr.length; i++) {
+                yArr[i] = dataArr[i].y;
+            }
+
+            // y축 수치값 중 가장 큰 값
+            const maxY = Math.max(...yArr);
+
+            // 가장 큰 수치를 가진 지표에 추가 할 옵션
+            const addOptions = {sliced: true,
+                                selected: true}
+
+            // 배열 순회 후 가장 큰 수치 값을 가진 객체에
+            // addOptions 객체 값 추가
+            dataArr.map((obj, idx) => {
+                if(dataArr[idx].y == maxY) {
+                    Object.assign(dataArr[idx], addOptions);
+                }
+            });
 
             this.chartOptions.series[0].data = dataArr;
         },

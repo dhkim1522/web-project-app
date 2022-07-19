@@ -69,11 +69,7 @@ export default {
     methods: {
         async loadAvgAetMonth(selectedMonth) {
 
-            console.log('selected !! ' + selectedMonth)
-
             const { data } = await getAvgAetDay(selectedMonth);
-
-            // console.log('data : {}', data);
 
             // X축 데이터 바인딩
             this.chartOptions.xAxis.categories 
@@ -94,9 +90,6 @@ export default {
                                 text: i + '월'
                               };
             }
-
-            // console.log('monthArr {}', monthArr);
-            // console.log('selectedMonth ' + this.selectedMonth);
 
             return monthArr;
         }

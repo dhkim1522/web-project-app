@@ -41,9 +41,6 @@
 </template>
 
 <script>
-// import { login } from '../api/axios'
-// import { saveAuthToCookie, saveUserNicknameToCookie } from '../utils/cookie';
-
 export default {
     data() {
         return {
@@ -60,8 +57,6 @@ export default {
                     userId: this.userId,
                     userPassword: this.userPassword
                 };
-
-                console.log('userData !! {}', userData)
 
                 await this.$store.dispatch('LOGIN', userData);
 
