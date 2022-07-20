@@ -68,9 +68,7 @@
       // 회원 조회
       async loadUser() {
 
-        let userSeqId = this.userSeqId;
-
-        const res = await getUser(userSeqId);
+        const res = await getUser(this.userSeqId);
 
         this.userId = res.data.userId;
         this.userNickname = res.data.userNickname;
@@ -80,15 +78,16 @@
       // 회원수정 폼 제출
       async updateProfileForm() {
 
-          let userseqId = this.userSeqId;
-          
           const userData = {
               userId: this.userId,
               userNickname: this.userNickname,
               userEmail: this.userEmail
           };
 
-          const res = await updateUser(userseqId, userData);
+          const res = await updateUser(this.userSeqId, userData);
+
+          // Vuex store 데이터 갱신
+          this.$store.commit('setUserNickname', res.data.userNickname);
 
           alert('회원수정 완료');
 

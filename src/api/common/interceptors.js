@@ -6,9 +6,12 @@ export function setInterceptors(instance) {
         function (config) {
         // Do something before request is sent
             // console.log(config);
-            config.headers.Authorization = store.state.token;
 
-            //console.log('interceptor request token : ' + store.state.token);
+            // config.headers.Authorization = store.state.token;
+
+            // console.log('interceptor request token : ' + store.state.token);
+
+            config.headers['X-AUTH-TOKEN'] = store.state.token;
             
             return config;
         },

@@ -5,14 +5,17 @@ import { getAuthFromCookie,
         //  getUserIdFromCookie,
          getUserNicknameFromCookie,
          saveUserSeqIdToCookie,
-         saveUserIdToCookie,
+        //  saveUserIdToCookie,
          saveAuthToCookie,
-         saveUserNicknameToCookie } from '../utils/cookie';
+         saveUserNicknameToCookie 
+        } from '../utils/cookie';
 import { login } from '@/api/axios';
 
 Vue.use(Vuex);
 
+// 컴포넌트 전역에서 사용 가능한 상태 관리 라이브러리
 export default new Vuex.Store({
+
     state: {
         userSeqId: getUserSeqIdFromCookie() || '',
         userId: '',
@@ -66,17 +69,17 @@ export default new Vuex.Store({
         async LOGIN({ commit }, userData) {
             const res = await login(userData);
 
-                // vuex store 등록
+                // Vuex store 회원 정보 등록
                 commit('setUserSeqId', res.data.userSeqId);
                 commit('setUserId', res.data.userId);
                 commit('setUserNickname', res.data.userNickname);
                 commit('setUserEmail', res.data.userEmail);
                 commit('setToken', res.data.token);
 
-                // cookie에 user 정보와 jwt 인증 키를 저장
+                // Cookie에 회원 정보와 JWT Token 저장
                 saveAuthToCookie(res.data.token);
                 saveUserSeqIdToCookie(res.data.userSeqId);
-                saveUserIdToCookie(res.data.userId);
+                // saveUserIdToCookie(res.data.userId);
                 saveUserNicknameToCookie(res.data.userNickname);
 
                 alert('로그인 완료');

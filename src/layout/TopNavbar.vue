@@ -37,7 +37,6 @@
   </nav>
 </template>
 <script>
-import { getUser } from '@/api/axios'
 import { deleteCookie } from '../utils/cookie';
 
   export default {

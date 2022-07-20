@@ -3,10 +3,10 @@ import { setInterceptors } from './common/interceptors';
 
 // axios 초기화 함수
 function initInstance() {
-    const instance = axios.create({
-        baseURL: process.env.VUE_APP_API_URL
+    const axiosInstance = axios.create({
+        baseURL: process.env.VUE_APP_API_URL,
     });
-    return setInterceptors(instance);
+    return setInterceptors(axiosInstance);
 }
 const instance = initInstance();
 
@@ -15,12 +15,12 @@ const instance = initInstance();
 
 // 회원가입 API
 function signup(userData) {
-    return instance.post('/user', userData);
+    return instance.post('/user/signup', userData);
 }
  
 // 로그인 API
 function login(userData) {
-    return instance.post('/login', userData);
+    return instance.post('/user/login', userData);
 }
 
 // 회원 조회 API
@@ -30,7 +30,7 @@ function getUser(userSeqId) {
 
 // 회원 수정 API
 function updateUser(userSeqId, userData) {
-    return instance.patch('/user', userSeqId, userData);
+    return instance.patch('/user/' + userSeqId, userData);
 }
 
 // 회원 ID 중복 검사 API

@@ -17,7 +17,7 @@ export default {
                     plotShadow: false
                 },
                 title: {
-                    text: '운항 취소 사유<br>분포',
+                    text: '운항 취소 <br>사유 별 분포',
                     align: 'center',
                     verticalAlign: 'middle',
                     y: 60,
