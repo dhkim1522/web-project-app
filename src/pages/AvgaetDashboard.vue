@@ -102,6 +102,8 @@
         nowTime: "00:00:00",
         nowDate: "",
 
+        polling: "",
+
         currentPage: this.$store.state.currentPage
       }
     },
@@ -138,9 +140,9 @@
         getNowTime() {
             let date = new Date();
 
-            this.nowTime = date.getHours() + ":" 
-                       + date.getMinutes() + ":"
-                       + date.getSeconds();
+            this.nowTime = ('0' + date.getHours()).slice(-2) + ":"
+                       + ('0' + date.getMinutes()).slice(-2) + ":"
+                       + ('0' + date.getSeconds()).slice(-2);
         },
     },
 
@@ -148,12 +150,19 @@
       this.loadUserCountAll();
       this.loadDataCountAll();
       this.getNowDate();
+    },
 
-      setInterval(() => {
+    mounted() {
+      this.polling = setInterval(() => {
         this.getNowTime();
       }, 1000);
-
     },
+
+    // monted 훅에서 선언된 setInterval이 다른 컴포넌트로 이동시에도
+    // 계속 실행되어 리소스를 요청하기 때문에 컴포넌트 이동시 리소스 해제
+    beforeDestroy () {
+      clearInterval(this.polling);
+    }
   }
 </script>
 <style>

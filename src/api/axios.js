@@ -33,6 +33,11 @@ function updateUser(userSeqId, userData) {
     return instance.patch('/user', userSeqId, userData);
 }
 
+// 회원 ID 중복 검사 API
+function duplicationUserCheck(userId) {
+    return instance.get('/user/duplication/' + userId);
+}
+
 // 전체 데이터 개수 조회 API
 function getUserCountAll() {
     return instance.get('/user/count');
@@ -91,6 +96,7 @@ export {
      login,
      getUser,
      updateUser,
+     duplicationUserCheck,
      getUserCountAll,
      getAvgAetMonth,
      getAvgAetDay,

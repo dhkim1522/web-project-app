@@ -10,9 +10,10 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h3 class="display-4">Signup Page</h3>
+                            <h3 class="display-4">회원가입 페이지</h3>
                             <p class="text-muted mb-4">Create a login split page using Bootstrap 4.</p>
-                            
+                            <br>
+                            <br>
                             <!-- form start -->
                             <form @submit.prevent="submitForm">
                                 <div class="form-group mb-3">
@@ -22,7 +23,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="userPassword">비밀번호</label>
-                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="********" required
+                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="**********" required
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
@@ -35,12 +36,18 @@
                                     <input v-model="userEmail" id="userEmail" type="text" placeholder="example@naver.com" required
                                     class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
+                                <br>
+                                <br>
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">회원가입</button>
                             </form>
                             <!-- form end -->
                             
                         </div>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </div><!-- End -->
             </div>
         </div><!-- End -->
@@ -49,7 +56,7 @@
 </template>
 
 <script>
-import { signup } from '@/api/axios'
+import { signup, duplicationUserCheck } from '@/api/axios'
 
 export default {
     data() {
@@ -57,13 +64,23 @@ export default {
             userId: '',
             userPassword: '',
             userNickname: '',
-            userEmail: ''
+            userEmail: '',
         }
     },
     methods: {
 
         // 회원가입 폼 제출
         async submitForm() {
+
+            const duplication = await duplicationUserCheck(this.userId);
+
+            const isDuplcate = duplication.data.duplication;
+
+            if(isDuplcate == 1) {
+                alert('중복된 회원 아이디 입니다.');
+                return;
+            }
+
             const userData = {
                 userId: this.userId,
                 userPassword: this.userPassword,
@@ -87,7 +104,7 @@ export default {
             this.userPassword = '';
             this.userNickname = '';
             this.userEmail = '';
-        }
+        },
     }
 }
 </script>

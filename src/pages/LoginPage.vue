@@ -10,18 +10,24 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h3 class="display-4">Login Page</h3>
+                            <h3 class="display-4">로그인 페이지</h3>
                             <p class="text-muted mb-4">Create a login split page using Bootstrap 4.</p>
+                            <br>
+                            <br>
                             <!-- form start -->
                             <form @submit.prevent="submitForm">
                                 <div class="form-group mb-3">
+                                    <label for="userId">아이디</label>
                                     <input v-model="userId" id="userId" type="text" placeholder="Id" required="" autofocus=""
                                      class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="Password" required=""
+                                    <label for="userPassword">비밀번호</label>
+                                    <input v-model="userPassword" id="userPassword" type="password" placeholder="**********" required=""
                                      class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                 </div>
+                                <br>
+                                <br>
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">
                                     로그인
                                 </button>
@@ -33,6 +39,10 @@
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </div><!-- End -->
             </div>
         </div><!-- End -->

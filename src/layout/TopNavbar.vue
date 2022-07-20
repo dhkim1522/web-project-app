@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/dashboard">Dashboard</a>
+      <a class="navbar-brand" href="/dashboard">Chart Dashboard</a>
       <button type="button"
               class="navbar-toggler navbar-toggler-right"
               :class="{toggled: $sidebar.showSidebar}"
@@ -75,15 +75,6 @@ import { deleteCookie } from '../utils/cookie';
         this.$sidebar.displaySidebar(false)
       },
 
-      // 회원 조회
-      async loadUser() {
-
-        const userSeqId = this.userSeqId;
-
-        const res = await getUser(userSeqId);
-
-        this.userNickname = res.data.userNickname;
-      },
 
       // 로그아웃
       logout() {
@@ -106,10 +97,6 @@ import { deleteCookie } from '../utils/cookie';
         this.$router.push('/login');
       }
     },
-
-    created() {
-      this.loadUser();
-    }
   }
 
 </script>

@@ -1,9 +1,13 @@
 <template>
   <card>
-    <h4 slot="header" class="card-title mt-2 ml-2">회원 수정</h4>
+    <div class="mx-4 my-4">
+      <div class="col-md-10 row bg-light border-top rounded">
+        <h4 slot="header" class="card-title m-2">회원 프로필 수정</h4>
+      </div>
+    <br>
     <form>
       <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
           <base-input type="text"
                     label="아이디"
                     :disabled="true"
@@ -14,7 +18,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <base-input type="text"
                     label="닉네임"
                     :placeholder="[[ userNickname ]]"
@@ -24,7 +28,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-6">
           <base-input type="email"
                     label="이메일"
                     :placeholder="[[ userEmail ]]"
@@ -40,6 +44,7 @@
       </div>
       <div class="clearfix"></div>
     </form>
+    </div>
   </card>
 </template>
 <script>
@@ -59,9 +64,6 @@
       }
     },
     methods: {
-      // updateProfile () {
-      //   alert('Your data: ' + JSON.stringify(this.user))
-      // }
 
       // 회원 조회
       async loadUser() {
@@ -86,14 +88,12 @@
               userEmail: this.userEmail
           };
 
-          console.log('수정 userData {}', userData);
-
           const res = await updateUser(userseqId, userData);
 
           alert('회원수정 완료');
 
           // 메인 대시보드 페이지로 이동
-          // this.$router.push('/dashboard');
+          this.$router.push('/dashboard');
       },
     },
     created() {

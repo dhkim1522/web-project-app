@@ -4,15 +4,15 @@
       <nav>
         <ul class="footer-menu">
           <li>
-            <router-link :to="{path:'/'}">Dashboard</router-link>
+            <router-link :to="{path:'/'}">Chart Dashboard</router-link>
           </li>
         </ul>
       </nav>
       <div class="copyright text-center">
-        &copy; Coded with
-        <i class="fa fa-heart heart"></i> by
-        <a href="https://binarcode.com" target="_blank">BinarCode</a>.
-        Designed by <a href="https://www.creative-tim.com/?ref=pdf-vuejs" target="_blank">Creative Tim</a>.
+        &copy; Copyright by dhkim1522
+        
+        <a href="https://https://github.com/dhkim1522.com" target="_blank">Github</a>.
+        Referenced by <a href="https://www.creative-tim.com/?ref=pdf-vuejs" target="_blank">Creative Tim</a>.
       </div>
     </div>
   </footer>
