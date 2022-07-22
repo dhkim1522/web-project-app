@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import { duplicationUserCheck } from '@/api/axios'
+
 export default {
     data() {
         return {
@@ -63,6 +65,15 @@ export default {
         async submitForm() {
             try {
                 // 비즈니스 로직
+                const duplication = await duplicationUserCheck(this.userId);
+
+                const isDuplcate = duplication.data.duplication;
+
+                if(isDuplcate == 0) {
+                    alert('존재하지 않는 회원 입니다.');
+                    return;
+                }
+
                 const userData = {
                     userId: this.userId,
                     userPassword: this.userPassword
